@@ -93,6 +93,10 @@
         lonely: 'A hollow ache of sadness connected to disconnection or lack of closeness—like being on the outside looking in.',
         hopeless: 'A flat, dark belief that things may not improve—like the absence of light at the end of the tunnel.',
         vulnerable: 'A tender, exposed feeling where your emotional skin feels thinner and easier to hurt.',
+        despair: 'A crushing emotional pain that feels immediate and engulfing, as if no relief is available right now.',
+        pessimistic: 'A thinking style that expects bad outcomes and spots what could go wrong first.',
+        defeated: 'A worn-down state after setbacks, where trying again feels pointless or too costly.',
+        empty: 'A numb, hollow, disconnected feeling where emotion seems muted or hard to access.',
 
         // Angry sub-emotions
         frustrated: 'A tight, stuck feeling when blocked from what you want or need—like pressing the gas with the brake on.',
@@ -114,6 +118,29 @@
         centered: 'A grounded, steady feeling of being connected to your core values—like a tree with deep roots.',
         balanced: 'A steady, even state between needs, emotions, and responsibilities—like a scale perfectly level.',
         mindful: 'A present, observant awareness without reactivity—like watching clouds pass without chasing them.'
+    };
+
+    const emotionDifferenceTips = {
+        pessimistic: {
+            despair: 'Choose pessimistic when the main experience is negative prediction; choose despair when the main experience is intense emotional pain right now.',
+            defeated: 'Choose pessimistic when your mind is active but expects failure; choose defeated when your motivation has collapsed after repeated setbacks.',
+            empty: 'Choose pessimistic when thoughts are loud and negative; choose empty when emotion feels flat, numb, or disconnected.'
+        },
+        despair: {
+            pessimistic: 'Choose despair when pain is overwhelming in this moment; choose pessimistic when it is mostly a future-negative thinking pattern.',
+            defeated: 'Choose despair when the core is anguish; choose defeated when the core is “I cannot keep doing this.”',
+            empty: 'Choose despair when feelings are intense; choose empty when feelings are blunted or absent.'
+        },
+        defeated: {
+            pessimistic: 'Choose defeated when you feel exhausted and done trying; choose pessimistic when you are still engaged but expecting bad outcomes.',
+            despair: 'Choose defeated when the core is giving up after effort; choose despair when the core is deep emotional suffering.',
+            empty: 'Choose defeated when effort-fatigue is central; choose empty when disconnection/numbness is central.'
+        },
+        empty: {
+            pessimistic: 'Choose empty when you feel numb and disconnected; choose pessimistic when your mind is actively forecasting negative outcomes.',
+            despair: 'Choose empty when emotional tone is flat; choose despair when emotional pain is intense and flooding.',
+            defeated: 'Choose empty when nothing feels reachable inside; choose defeated when you specifically feel beaten down by trying.'
+        }
     };
 
     const emotionProfile = {
@@ -165,10 +192,18 @@
     }
 
     function describeDifference(emotion, other) {
+        const directTip = emotionDifferenceTips[emotion]?.[other];
+        if (directTip) return directTip;
+
         const a = emotionProfile[emotion];
         const b = emotionProfile[other];
         if (!a || !b) {
-            return `${toTitleCase(emotion)} feels different from ${other}; choose the one that best matches the sensations in your body right now.`;
+            const defA = emotionHelpText[emotion];
+            const defB = emotionHelpText[other];
+            if (defA && defB) {
+                return `${toTitleCase(emotion)}: ${defA} ${toTitleCase(other)}: ${defB}`;
+            }
+            return `Choose ${emotion} if that label feels more precise right now than ${other}.`;
         }
         let diffBits = [];
         if (Math.abs(a.energy - b.energy) >= 2) diffBits.push(a.energy > b.energy ? 'carries more energetic charge' : 'feels more subdued and still');
