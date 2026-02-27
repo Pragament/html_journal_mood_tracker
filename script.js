@@ -328,8 +328,8 @@
                         <div style="max-width:500px; margin:20px auto;">
                             <h3>🔐 Set up PIN</h3>
                             <p class="small-note">This PIN protects your entries (cannot be recovered).</p>
-                            <input type="password" id="newPin" placeholder="New PIN" style="margin-bottom:12px;" />
-                            <input type="password" id="confirmPin" placeholder="Confirm PIN" style="margin-bottom:12px;" />
+                            <input type="password" id="newPin" placeholder="New PIN" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="numeric" data-lpignore="true" data-1p-ignore="true" style="margin-bottom:12px;" />
+                            <input type="password" id="confirmPin" placeholder="Confirm PIN" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="numeric" data-lpignore="true" data-1p-ignore="true" style="margin-bottom:12px;" />
                             <input type="text" id="pinHint" placeholder="PIN hint (optional)" style="margin-bottom:16px;" />
                             <div class="actions">
                                 <button class="btn btn-primary" id="setPinBtn">Set PIN & Start</button>
@@ -360,7 +360,7 @@
                     mainDiv.innerHTML = `
                         <div style="max-width:400px; margin:20px auto;">
                             <h3>🔐 Enter PIN</h3>
-                            <input type="password" id="pinInput" placeholder="Your PIN" style="margin-bottom:16px;" />
+                            <input type="password" id="pinInput" placeholder="Your PIN" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="numeric" data-lpignore="true" data-1p-ignore="true" style="margin-bottom:16px;" />
                             <div class="row">
                                 <button class="btn btn-primary" id="unlockBtn">Unlock</button>
                                 <button class="btn btn-outline" id="hintBtn">Show Hint</button>
@@ -376,6 +376,12 @@
                             renderApp();
                         } else {
                             document.getElementById('hintBox').innerHTML = '❌ Wrong PIN';
+                        }
+                    });
+                    document.getElementById('pinInput')?.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            document.getElementById('unlockBtn')?.click();
                         }
                     });
                     
@@ -452,6 +458,7 @@
                         <button class="btn btn-outline" id="clearMoodSelection">Clear</button>
                         <button class="btn btn-outline" id="addLocationToMood">📍 Add Current Location</button>
                     </div>
+                    <div id="quickLocationStatus" class="small-note" aria-live="polite"></div>
                     <div class="small-note">Quick entry auto-fills emotions and timestamp. You can edit details later.</div>
                 </div>
 
@@ -600,6 +607,8 @@
                 document.getElementById('tertiaryEmotions').style.display = 'none';
                 selectedPrimary = selectedSecondary = null;
                 selectedTertiary = [];
+                let status = document.getElementById('quickLocationStatus');
+                if (status) status.innerText = '';
                 updateSelectedMoodsDisplay();
             });
 
@@ -638,10 +647,20 @@
                 let hour = new Date().getHours();
                 let timeTag = hour < 12 ? 'time:morning' : (hour < 18 ? 'time:afternoon' : 'time:evening');
                 newEntry.timeTags.push(timeTag);
+                if (window.tempQuickLat != null && window.tempQuickLng != null) {
+                    newEntry.lat = window.tempQuickLat;
+                    newEntry.lng = window.tempQuickLng;
+                    let locTag = LOCATION_TAG_PREFIX + 'lat_' + window.tempQuickLat.toFixed(2);
+                    if (!newEntry.locationTags.includes(locTag)) newEntry.locationTags.push(locTag);
+                }
 
                 journalEntries.push(newEntry);
                 saveDataToStorage();
                 filterAndRenderEntries();
+                window.tempQuickLat = null;
+                window.tempQuickLng = null;
+                let status = document.getElementById('quickLocationStatus');
+                if (status) status.innerText = '';
                 
                 // Clear selection
                 document.getElementById('clearMoodSelection').click();
@@ -651,13 +670,14 @@
             // Add location to mood entry
             document.getElementById('addLocationToMood')?.addEventListener('click', () => {
                 getCurrentLocation((pos) => {
+                    let status = document.getElementById('quickLocationStatus');
                     if (pos) {
-                        alert(`Location captured (${pos.lat.toFixed(4)}, ${pos.lng.toFixed(4)})`);
                         // Store in temporary state for next quick save
                         window.tempQuickLat = pos.lat;
                         window.tempQuickLng = pos.lng;
+                        if (status) status.innerText = `📍 Location added (${pos.lat.toFixed(4)}, ${pos.lng.toFixed(4)}) for the next quick entry.`;
                     } else {
-                        alert('Could not get location');
+                        if (status) status.innerText = '⚠️ Could not get location. Check browser location permission.';
                     }
                 });
             });
@@ -962,9 +982,9 @@
                 <div class="modal-overlay" id="pinModal">
                     <div class="modal">
                         <h3>Change PIN</h3>
-                        <input type="password" id="oldPin" placeholder="Current PIN" /><br><br>
-                        <input type="password" id="newPin1" placeholder="New PIN" /><br><br>
-                        <input type="password" id="newPin2" placeholder="Confirm new" /><br><br>
+                        <input type="password" id="oldPin" placeholder="Current PIN" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="numeric" data-lpignore="true" data-1p-ignore="true" /><br><br>
+                        <input type="password" id="newPin1" placeholder="New PIN" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="numeric" data-lpignore="true" data-1p-ignore="true" /><br><br>
+                        <input type="password" id="newPin2" placeholder="Confirm new" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="numeric" data-lpignore="true" data-1p-ignore="true" /><br><br>
                         <input type="text" id="newPinHint" placeholder="New hint (optional)" /><br><br>
                         <div class="actions">
                             <button class="btn btn-primary" id="submitPinChange">Update</button>
