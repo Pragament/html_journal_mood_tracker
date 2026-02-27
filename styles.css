@@ -1,0 +1,379 @@
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background: #f0f3f8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 16px;
+        }
+        .app-container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            padding: 24px 28px 12px 28px;
+            border-bottom: 1px solid #eef0f3;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a2e3f;
+            letter-spacing: -0.02em;
+        }
+        .pin-area {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: #f0f3f7;
+            padding: 6px 12px;
+            border-radius: 40px;
+        }
+        .btn {
+            background: white;
+            border: 1px solid #cfd9e6;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.15s;
+            color: #1e2f40;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .btn-primary {
+            background: #1a2e3f;
+            border-color: #1a2e3f;
+            color: white;
+        }
+        .btn-primary:hover { background: #23495f; }
+        .btn-outline:hover { background: #e6ecf3; }
+        .danger-btn { color: #b91c1c; border-color: #f3d4d4; }
+        .danger-btn:hover { background: #fee2e2; }
+        .pin-badge {
+            background: #1a2e3f;
+            color: white;
+            border-radius: 30px;
+            padding: 4px 14px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .main {
+            padding: 24px 28px 28px 28px;
+        }
+        .session-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            align-items: center;
+            background: #f7f9fc;
+            padding: 12px 18px;
+            border-radius: 60px;
+        }
+        .spacer { flex: 1; }
+        
+        /* Mood wheel styles */
+        .mood-wheel-container {
+            background: linear-gradient(145deg, #f9f2e7, #fff6ed);
+            border-radius: 40px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #ffe6d5;
+        }
+        .mood-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 16px 0;
+            justify-content: center;
+        }
+        .mood-cat {
+            background: white;
+            border-radius: 60px;
+            padding: 12px 24px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: 0.2s;
+            min-width: 100px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .mood-cat.selected {
+            border-color: #1a2e3f;
+            background: #e3f0fd;
+            transform: scale(1.02);
+        }
+        .mood-cat[data-category="happy"] { background: #FFF8E7; color: #b45f06; }
+        .mood-cat[data-category="sad"] { background: #E7F0FF; color: #1a4b8c; }
+        .mood-cat[data-category="angry"] { background: #FFE7E7; color: #b13e3e; }
+        .mood-cat[data-category="anxious"] { background: #F0E7FF; color: #5e3b8c; }
+        .mood-cat[data-category="calm"] { background: #E7FFF0; color: #1f7840; }
+        
+        .emotion-wheel {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 28px;
+        }
+        .emotion-item {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            border: 1px solid #e2d9d0;
+            transition: 0.1s;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .emotion-item:hover {
+            background: #f5e9de;
+            border-color: #b98f6e;
+        }
+        .emotion-item.selected {
+            background: #1a2e3f;
+            color: white;
+            border-color: #1a2e3f;
+        }
+        .emotion-item.secondary-level {
+            margin-left: 20px;
+            font-size: 0.9rem;
+            background: #faf5f0;
+        }
+        .emotion-help-btn {
+            width: 22px;
+            height: 22px;
+            border-radius: 999px;
+            border: 1px solid #9fb3c9;
+            background: #ffffff;
+            color: #244059;
+            font-weight: 700;
+            line-height: 1;
+            cursor: pointer;
+            flex-shrink: 0;
+            font-size: 0.8rem;
+        }
+        .emotion-help-btn:hover {
+            border-color: #244059;
+            background: #edf5ff;
+        }
+        .emotion-help-panel {
+            margin: 12px 0 16px;
+            padding: 14px 16px;
+            border-radius: 18px;
+            border: 1px solid #d8e6f4;
+            background: #f7fbff;
+            color: #26415a;
+            font-size: 0.9rem;
+        }
+        .emotion-help-header {
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .emotion-help-body {
+            margin-bottom: 8px;
+        }
+        .emotion-help-list {
+            margin: 6px 0 0 18px;
+            padding: 0;
+        }
+        .emotion-help-list li {
+            margin-bottom: 4px;
+        }
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+        
+        .journal-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .card {
+            background: #fbfdff;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 22px 24px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.02);
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: #163249;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .field-group {
+            margin-bottom: 18px;
+        }
+        label {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #3e5468;
+            display: block;
+            margin-bottom: 6px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d7e0e9;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            background: white;
+            transition: 0.1s;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #1a2e3f;
+            box-shadow: 0 0 0 3px rgba(26,46,63,0.1);
+        }
+        .row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .tag {
+            background: #e4ecf5;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tag button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #5b6f82;
+            padding: 0 4px;
+        }
+        .autocomplete-list {
+            background: white;
+            border: 1px solid #d0dbe8;
+            border-radius: 16px;
+            max-height: 160px;
+            overflow-y: auto;
+            margin-top: 4px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.04);
+        }
+        .autocomplete-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #edf2f7;
+        }
+        .autocomplete-item:hover { background: #e6f0fc; }
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 20px 0 10px;
+        }
+        .search-section {
+            background: #f1f5f9;
+            border-radius: 28px;
+            padding: 20px 22px;
+            margin-bottom: 24px;
+        }
+        .entry-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e1eaf2;
+            border-radius: 24px;
+            padding: 16px;
+            background: #ffffff;
+        }
+        .entry-item {
+            background: #f9fcff;
+            border: 1px solid #dde5ef;
+            border-radius: 20px;
+            padding: 16px 20px;
+            cursor: pointer;
+        }
+        .entry-item:hover { background: #f1f7fd; }
+        .modal-overlay {
+            position: fixed;
+            top:0; left:0; right:0; bottom:0;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+        }
+        .modal {
+            background: white;
+            max-width: 480px;
+            width: 90%;
+            border-radius: 40px;
+            padding: 32px;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.2);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .hint-text {
+            background: #eef5ff;
+            padding: 16px;
+            border-radius: 20px;
+            margin: 16px 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        .small-note { font-size: 0.8rem; color: #5f7488; margin-top: 8px; }
+        .hidden { display: none; }
+        .flex { display: flex; gap: 12px; align-items: center; }
+        
+        /* Emotion hierarchy */
+        .emotion-hierarchy {
+            margin: 16px 0;
+            border-left: 3px solid #d9b99f;
+            padding-left: 16px;
+        }
+        .selected-emotions {
+            background: #ecf3fa;
+            border-radius: 40px;
+            padding: 12px 20px;
+            margin: 16px 0;
+        }
