@@ -93,6 +93,10 @@
         lonely: 'A hollow ache of sadness connected to disconnection or lack of closeness—like being on the outside looking in.',
         hopeless: 'A flat, dark belief that things may not improve—like the absence of light at the end of the tunnel.',
         vulnerable: 'A tender, exposed feeling where your emotional skin feels thinner and easier to hurt.',
+        despair: 'A crushing emotional pain that feels immediate and engulfing, as if no relief is available right now.',
+        pessimistic: 'A thinking style that expects bad outcomes and spots what could go wrong first.',
+        defeated: 'A worn-down state after setbacks, where trying again feels pointless or too costly.',
+        empty: 'A numb, hollow, disconnected feeling where emotion seems muted or hard to access.',
 
         // Angry sub-emotions
         frustrated: 'A tight, stuck feeling when blocked from what you want or need—like pressing the gas with the brake on.',
@@ -114,6 +118,224 @@
         centered: 'A grounded, steady feeling of being connected to your core values—like a tree with deep roots.',
         balanced: 'A steady, even state between needs, emotions, and responsibilities—like a scale perfectly level.',
         mindful: 'A present, observant awareness without reactivity—like watching clouds pass without chasing them.'
+    };
+
+    const emotionDifferenceTips = {
+        pessimistic: {
+            despair: 'Choose pessimistic when the main experience is negative prediction; choose despair when the main experience is intense emotional pain right now.',
+            defeated: 'Choose pessimistic when your mind is active but expects failure; choose defeated when your motivation has collapsed after repeated setbacks.',
+            empty: 'Choose pessimistic when thoughts are loud and negative; choose empty when emotion feels flat, numb, or disconnected.'
+        },
+        despair: {
+            pessimistic: 'Choose despair when pain is overwhelming in this moment; choose pessimistic when it is mostly a future-negative thinking pattern.',
+            defeated: 'Choose despair when the core is anguish; choose defeated when the core is “I cannot keep doing this.”',
+            empty: 'Choose despair when feelings are intense; choose empty when feelings are blunted or absent.'
+        },
+        defeated: {
+            pessimistic: 'Choose defeated when you feel exhausted and done trying; choose pessimistic when you are still engaged but expecting bad outcomes.',
+            despair: 'Choose defeated when the core is giving up after effort; choose despair when the core is deep emotional suffering.',
+            empty: 'Choose defeated when effort-fatigue is central; choose empty when disconnection/numbness is central.'
+        },
+        empty: {
+            pessimistic: 'Choose empty when you feel numb and disconnected; choose pessimistic when your mind is actively forecasting negative outcomes.',
+            despair: 'Choose empty when emotional tone is flat; choose despair when emotional pain is intense and flooding.',
+            defeated: 'Choose empty when nothing feels reachable inside; choose defeated when you specifically feel beaten down by trying.'
+        }
+    };
+
+    const emotionClusterChoiceCues = {
+        primary: {
+            happy: 'you feel pleasant uplift, reward, or enjoyment',
+            sad: 'you feel loss, heaviness, or emotional pain',
+            angry: 'you feel wronged, blocked, or ready to push back',
+            anxious: 'you feel uncertainty, threat, or over-alertness',
+            calm: 'you feel regulated, steady, and settled'
+        },
+        happy: {
+            joyful: 'the feeling is bright and high-energy',
+            content: 'the feeling is quiet, enough, and low-pressure',
+            optimistic: 'the key pattern is hope about what comes next',
+            playful: 'the key pattern is curiosity, fun, and lightness',
+            proud: 'the feeling is tied to achievement, values, or effort'
+        },
+        sad: {
+            grief: 'the pain is connected to loss',
+            disappointed: 'the pain comes from unmet expectations',
+            lonely: 'the pain is about disconnection from others',
+            hopeless: 'the core belief is that improvement will not come',
+            vulnerable: 'the core feeling is emotional exposure'
+        },
+        angry: {
+            frustrated: 'you feel blocked from progress',
+            irritated: 'it is a lower-intensity annoyance',
+            furious: 'the anger is intense and explosive',
+            resentful: 'the anger is lingering and fairness-focused',
+            jealous: 'the anger/fear is about losing something valued'
+        },
+        anxious: {
+            worried: 'your mind is looping over possible future problems',
+            overwhelmed: 'demands exceed your perceived capacity',
+            scared: 'you feel immediate threat or danger',
+            stressed: 'you feel pressure load and sustained tension',
+            insecure: 'you feel self-doubt about worth or adequacy'
+        },
+        calm: {
+            peaceful: 'the state feels deeply quiet and undisturbed',
+            relaxed: 'the body feels released from tension',
+            centered: 'you feel grounded in your core values',
+            balanced: 'you feel even across competing needs',
+            mindful: 'you are present and observant without reacting'
+        },
+        joyful: {
+            ecstatic: 'intensity is extreme and euphoric',
+            elated: 'there is a strong lifted, soaring mood',
+            gleeful: 'there is a playful spark and delight',
+            cheerful: 'the mood is bright but more moderate'
+        },
+        content: {
+            peaceful: 'stillness and inner quiet are strongest',
+            satisfied: 'needs/goals feel adequately met',
+            grateful: 'appreciation for what you have is central',
+            comfortable: 'ease and safety in your current state are central'
+        },
+        optimistic: {
+            hopeful: 'you see possibility despite uncertainty',
+            encouraged: 'you feel boosted by support/progress',
+            excited: 'future possibility feels energizing',
+            eager: 'you strongly want to begin or move forward'
+        },
+        playful: {
+            silly: 'you feel goofy and not serious',
+            whimsical: 'you feel imaginative and unusual',
+            lighthearted: 'you feel easy and unburdened',
+            mischievous: 'you feel playful with a rule-bending edge'
+        },
+        proud: {
+            accomplished: 'completion and achievement are central',
+            confident: 'belief in your capability is central',
+            worthy: 'self-value and deservedness are central',
+            respected: 'recognition from others is central'
+        },
+        grief: {
+            sorrow: 'the tone is deep sadness',
+            heartbroken: 'the pain feels intense and shattered',
+            loss: 'awareness of what is missing is central',
+            anguish: 'the distress is severe and consuming'
+        },
+        disappointed: {
+            'let down': 'trust or expectation was not met',
+            dismayed: 'you feel discouraged and unsettled',
+            dissatisfied: 'you feel something is not good enough',
+            unfulfilled: 'something important feels incomplete or missing'
+        },
+        lonely: {
+            isolated: 'you feel cut off from others',
+            abandoned: 'you feel left behind by someone important',
+            'left out': 'you feel excluded from belonging',
+            rejected: 'you feel actively not accepted'
+        },
+        hopeless: {
+            despair: 'emotional pain is intense right now',
+            pessimistic: 'future expectations are strongly negative',
+            defeated: 'motivation collapsed after repeated setbacks',
+            empty: 'you feel numb, hollow, or disconnected'
+        },
+        vulnerable: {
+            fragile: 'you feel easily hurt or destabilized',
+            insecure: 'you feel unsure of your worth/safety',
+            sensitive: 'you feel emotionally reactive to small cues',
+            exposed: 'you feel unprotected and seen in a risky way'
+        },
+        frustrated: {
+            stuck: 'there is no movement despite effort',
+            annoyed: 'it is a milder irritation about obstacles',
+            thwarted: 'a goal was directly blocked',
+            impatient: 'delay itself is the main trigger'
+        },
+        irritated: {
+            aggravated: 'annoyance is actively building',
+            grumpy: 'low-level irritable mood is ongoing',
+            exasperated: 'patience feels used up',
+            cranky: 'irritability is body/mood-driven and snappy'
+        },
+        furious: {
+            enraged: 'anger feels extreme and explosive',
+            livid: 'anger feels hot and sustained',
+            outraged: 'moral violation/unfairness is central',
+            explosive: 'urge to react immediately is strongest'
+        },
+        resentful: {
+            bitter: 'old hurt feels hardened',
+            spiteful: 'there is an urge to retaliate',
+            indignant: 'sense of injustice/disrespect is strongest',
+            sour: 'low-grade lingering displeasure dominates'
+        },
+        jealous: {
+            envious: 'you want what someone else has',
+            possessive: 'fear of losing what is yours is central',
+            insecure: 'self-doubt drives the jealousy',
+            covetous: 'strong longing for another\'s status/object is central'
+        },
+        worried: {
+            apprehensive: 'uneasy anticipation is strongest',
+            dread: 'you expect something bad with heaviness',
+            concerned: 'care-focused caution is strongest',
+            nervous: 'jittery body activation is strongest'
+        },
+        overwhelmed: {
+            flooded: 'too many feelings hit at once',
+            burdened: 'responsibility load feels too heavy',
+            swamped: 'task volume is unmanageable',
+            stretched: 'capacity is maxed across too many demands'
+        },
+        scared: {
+            terrified: 'fear intensity is very high',
+            fearful: 'general fear is present but less extreme',
+            panicked: 'fear is rapid and out-of-control',
+            horrified: 'shock/disgust and fear are combined'
+        },
+        stressed: {
+            pressured: 'external demands are pushing hard',
+            tense: 'body tightness and vigilance are strongest',
+            'burned out': 'prolonged stress depleted energy',
+            frazzled: 'attention feels scattered and frayed'
+        },
+        insecure: {
+            inadequate: 'you feel not enough for the task/role',
+            doubtful: 'belief in outcome/self is shaky',
+            unsure: 'clarity/confidence is missing',
+            'self-critical': 'inner judgment is harsh'
+        },
+        peaceful: {
+            serene: 'calm feels deep and emotionally pure',
+            tranquil: 'calm feels gentle and undisturbed',
+            quiet: 'mental/emotional noise is reduced',
+            still: 'inner movement feels minimal'
+        },
+        relaxed: {
+            'at ease': 'comfort and safety are central',
+            comfortable: 'physical/emotional ease is central',
+            loose: 'muscle/mental tension has dropped',
+            rested: 'energy recovered after strain'
+        },
+        centered: {
+            grounded: 'connection to reality/body is strongest',
+            focused: 'attention is clear and directed',
+            present: 'attention is anchored in now',
+            stable: 'inner state feels consistent and steady'
+        },
+        balanced: {
+            harmonious: 'parts of life feel aligned',
+            steady: 'state remains consistent over time',
+            even: 'emotional swings are minimal',
+            composed: 'self-control under pressure is central'
+        },
+        mindful: {
+            aware: 'broad noticing is strongest',
+            conscious: 'intentional wakeful attention is central',
+            attentive: 'focused noticing of details is central',
+            observant: 'watching patterns without reacting is central'
+        }
     };
 
     const emotionProfile = {
@@ -164,11 +386,27 @@
         return (text || '').replace(/\b\w/g, c => c.toUpperCase());
     }
 
-    function describeDifference(emotion, other) {
+    function describeDifference(emotion, other, contextParent, level) {
+        const directTip = emotionDifferenceTips[emotion]?.[other];
+        if (directTip) return directTip;
+
+        const clusterKey = level === 'primary' ? 'primary' : contextParent;
+        const clusterCues = emotionClusterChoiceCues[clusterKey];
+        const cueEmotion = clusterCues?.[emotion];
+        const cueOther = clusterCues?.[other];
+        if (cueEmotion && cueOther) {
+            return `Choose ${emotion} when ${cueEmotion}; choose ${other} when ${cueOther}.`;
+        }
+
         const a = emotionProfile[emotion];
         const b = emotionProfile[other];
         if (!a || !b) {
-            return `${toTitleCase(emotion)} feels different from ${other}; choose the one that best matches the sensations in your body right now.`;
+            const defA = emotionHelpText[emotion];
+            const defB = emotionHelpText[other];
+            if (defA && defB) {
+                return `${toTitleCase(emotion)}: ${defA} ${toTitleCase(other)}: ${defB}`;
+            }
+            return `Choose ${emotion} if that label feels more precise right now than ${other}.`;
         }
         let diffBits = [];
         if (Math.abs(a.energy - b.energy) >= 2) diffBits.push(a.energy > b.energy ? 'carries more energetic charge' : 'feels more subdued and still');
@@ -181,9 +419,12 @@
     function showEmotionHelp(emotion, level, peers, contextParent) {
         const panel = document.getElementById('emotionHelpPanel');
         if (!panel) return;
+        const clusterKey = level === 'primary' ? 'primary' : contextParent;
+        const clusterCue = emotionClusterChoiceCues[clusterKey]?.[emotion];
         const baseDescription = emotionHelpText[emotion] ||
-            (contextParent ? `${toTitleCase(emotion)} is a more specific expression of ${contextParent}, with its own unique emotional texture.` : `${toTitleCase(emotion)} describes this particular emotional state.`);
-        const comparisons = (peers || []).slice(0, 3).map(p => `<li>${describeDifference(emotion, p)}</li>`).join('');
+            (clusterCue ? `Choose ${emotion} when ${clusterCue}.` :
+                (contextParent ? `${toTitleCase(emotion)} is a more specific expression of ${contextParent}, with its own unique emotional texture.` : `${toTitleCase(emotion)} describes this particular emotional state.`));
+        const comparisons = (peers || []).slice(0, 3).map(p => `<li>${describeDifference(emotion, p, contextParent, level)}</li>`).join('');
         panel.innerHTML = `
         <div class="emotion-help-header">Understanding ${toTitleCase(emotion)} <span class="small-note">(${level})</span></div>
         <div class="emotion-help-body">${baseDescription}</div>
